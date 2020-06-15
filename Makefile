@@ -10,19 +10,16 @@ ARCH:=powerpc
 BOARD:=mpc83xx
 BOARDNAME:=Freescale MPC83xx
 CPU_TYPE:=603e
-FEATURES:=squashfs targz
-MAINTAINER:=Imre Kaloz <kaloz@openwrt.org>
+FEATURES:=fpu gpio rtc spi
+SUBTARGETS:=meru
 
-KERNEL_PATCHVER:=3.18
+KERNEL_PATCHVER:=5.4
+
+KERNELNAME:=uImage
 
 include $(INCLUDE_DIR)/target.mk
 
-DEFAULT_PACKAGES += kmod-via-velocity
-
-define Target/Description
-	Build firmware images for Freescale MPC83xx based boards (eg. RouterBoard 600).
-endef
-
-KERNELNAME:=uImage dtbImage.rb600 dtbImage.rb333
+DEFAULT_PACKAGES += \
+	-ppp -ppp-mod-pppoe uboot-envtools
 
 $(eval $(call BuildTarget))

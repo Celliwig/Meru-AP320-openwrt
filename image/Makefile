@@ -1,33 +1,24 @@
 #
-# Copyright (C) 2009-2010 OpenWrt.org
-#
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
 #
 include $(TOPDIR)/rules.mk
 include $(INCLUDE_DIR)/image.mk
 
-
-define Image/Prepare
-	$(LINUX_DIR)/scripts/dtc/dtc -O dtb -R 4 -S 0x20000 $(DTS_DIR)/mpc8377_wlan.dts > $(BIN_DIR)/openwrt-mpc83xx-mpc8377_wlan.dtb
+define Build/copy-file
+	cat "$(1)" > "$@"
 endef
 
-define Image/BuildKernel
-	cp $(LINUX_DIR)/arch/powerpc/boot/dtbImage.rb600.elf $(BIN_DIR)/openwrt-$(BOARD)-rb600.elf
-	cp $(LINUX_DIR)/arch/powerpc/boot/dtbImage.rb333.elf $(BIN_DIR)/openwrt-$(BOARD)-rb333.elf
-	cp $(KDIR)/uImage $(BIN_DIR)/openwrt-$(BOARD)-uImage
+define Device/Default
+	PROFILES := Default
+	DEVICE_DTS := $(lastword $(subst _, ,$(1)))
+	KERNEL_DEPENDS = $$(wildcard $(DTS_DIR)/$$(DEVICE_DTS).dts)
+	KERNEL_ENTRY := 0x00000000
+	KERNEL_LOADADDR := 0x00000000
+	KERNEL := kernel-bin
+	SUPPORTED_DEVICES := $(subst _,$(comma),$(1))
 endef
 
-define Image/Build
-	$(call Image/Build/$(1),$(1))
-endef
-
-define Image/Build/squashfs
-	$(call prepare_generic_squashfs,$(KDIR)/root.squashfs)
-	( \
-		dd if=$(LINUX_DIR)/arch/powerpc/boot/uImage bs=3072k conv=sync; \
-		dd if=$(KDIR)/root.$(1) bs=256k conv=sync; \
-	) > $(BIN_DIR)/$(IMG_PREFIX)-mpc8377_wlan-$(1).img
-endef
+include $(SUBTARGET).mk
 
 $(eval $(call BuildImage))
