@@ -1,0 +1,21 @@
+--- a/arch/powerpc/platforms/83xx/Kconfig	2020-06-07 12:18:52.000000000 +0100
++++ b/arch/powerpc/platforms/83xx/Kconfig	2020-06-09 04:57:16.311098116 +0100
+@@ -104,6 +104,11 @@
+ 	help
+ 	  This enables support for the Keymile KMETER1 board.
+ 
++config MERU_AP320
++	bool "Meru Networks AP320"
++	select PPC_MPC834x
++	help
++	  This enables support for the Meru Networks AP320.
+ 
+ endif
+ 
+--- a/arch/powerpc/platforms/83xx/Makefile	2020-06-07 12:18:52.000000000 +0100
++++ b/arch/powerpc/platforms/83xx/Makefile	2020-06-09 05:16:25.712870987 +0100
+@@ -17,3 +17,4 @@
+ obj-$(CONFIG_MPC837x_RDB)	+= mpc837x_rdb.o
+ obj-$(CONFIG_ASP834x)		+= asp834x.o
+ obj-$(CONFIG_KMETER1)		+= km83xx.o
++obj-$(CONFIG_MERU_AP320)	+= meru-ap320.o

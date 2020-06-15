@@ -1,0 +1,44 @@
+diff -au temp/linux-5.4.45/arch/powerpc/boot/Makefile Meru-AP320-kernel/arch/powerpc/boot/Makefile
+--- temp/linux-5.4.45/arch/powerpc/boot/Makefile	2020-06-07 12:18:52.000000000 +0100
++++ Meru-AP320-kernel/arch/powerpc/boot/Makefile	2020-06-12 16:26:16.563930909 +0100
+@@ -148,7 +148,7 @@
+ src-plat-$(CONFIG_PPC_8xx) += cuboot-8xx.c fixed-head.S ep88xc.c redboot-8xx.c
+ src-plat-$(CONFIG_PPC_MPC52xx) += cuboot-52xx.c
+ src-plat-$(CONFIG_PPC_82xx) += cuboot-pq2.c fixed-head.S ep8248e.c cuboot-824x.c
+-src-plat-$(CONFIG_PPC_83xx) += cuboot-83xx.c fixed-head.S redboot-83xx.c
++src-plat-$(CONFIG_PPC_83xx) += cuboot-83xx.c fixed-head.S redboot-83xx.c simpleboot.c meru-ap320-head.S
+ src-plat-$(CONFIG_FSL_SOC_BOOKE) += cuboot-85xx.c cuboot-85xx-cpm2.c
+ src-plat-$(CONFIG_EMBEDDED6xx) += cuboot-pq2.c cuboot-mpc7448hpc2.c \
+ 					gamecube-head.S gamecube.c \
+@@ -325,6 +325,7 @@
+ image-$(CONFIG_MPC834x_MDS)		+= cuImage.mpc834x_mds
+ image-$(CONFIG_MPC836x_MDS)		+= cuImage.mpc836x_mds
+ image-$(CONFIG_ASP834x)			+= dtbImage.asp834x-redboot
++image-$(CONFIG_MERU_AP320)		+= cuImage.meru-ap320
+ 
+ # Board ports in arch/powerpc/platform/85xx/Kconfig
+ image-$(CONFIG_MPC8540_ADS)		+= cuImage.mpc8540ads
+diff -au temp/linux-5.4.45/arch/powerpc/boot/wrapper Meru-AP320-kernel/arch/powerpc/boot/wrapper
+--- temp/linux-5.4.45/arch/powerpc/boot/wrapper	2020-06-07 12:18:52.000000000 +0100
++++ Meru-AP320-kernel/arch/powerpc/boot/wrapper	2020-06-12 16:13:23.794134532 +0100
+@@ -292,6 +292,9 @@
+     *-mpc83*|*-asp834x*)
+         platformo=$object/cuboot-83xx.o
+         ;;
++    *-meru-ap320*)
++        platformo="$object/meru-ap320-head.o $object/cuboot-83xx.o"
++        ;;
+     *-tqm8541|*-mpc8560*|*-tqm8560|*-tqm8555|*-ksi8560*)
+         platformo=$object/cuboot-85xx-cpm2.o
+         ;;
+@@ -323,6 +326,10 @@
+     platformo="$object/fixed-head.o $object/redboot-8xx.o"
+     binary=y
+     ;;
++simpleboot-meru-ap320*)
++    platformo="$object/meru-ap320-head.o $object/simpleboot.o"
++    binary=y
++    ;;
+ simpleboot-virtex405-*)
+     platformo="$object/virtex405-head.o $object/simpleboot.o $object/virtex.o"
+     binary=y
