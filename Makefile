@@ -15,7 +15,7 @@ SUBTARGETS:=meru
 
 KERNEL_PATCHVER:=5.4
 
-KERNELNAME:=uImage
+#KERNELNAME:=dtbImage
 
 include $(INCLUDE_DIR)/target.mk
 
