@@ -40,22 +40,28 @@ DEVICE_VARS += SEAMA_SIGNATURE SEAMA_MTDBLOCK
 #	@mv $@.new $@
 #endef
 
-define Build/wrgg-pad-rootfs
-	$(STAGING_DIR_HOST)/bin/padjffs2 $(IMAGE_ROOTFS) -c 64 >>$@
-endef
+#define Build/wrgg-pad-rootfs
+#	$(STAGING_DIR_HOST)/bin/padjffs2 $(IMAGE_ROOTFS) -c 64 >>$@
+#endef
 
 define Device/ap320
-	DEVICE_TITLE := Meru Networks AP320
-	DEVICE_PACKAGES := squashfs
+	DEVICE_VENDOR := Meru Networks
+	DEVICE_MODEL := AP320
 	BOARDNAME := AP320
+	DEVICE_PACKAGES += kmod-usb-core kmod-usb-ehci-fsl kmod-usbmon \
+				wpad-basic
 	TARGET_ROOTFS_PARTSIZE := 5040k
 	ROOTFS_SIZE := 5040k
-	IMAGE_SIZE := 10080k
+	IMAGE_SIZE := 5040k
+	KERNEL := kernel-bin | dtb | gzip
+# | cuImage gzip
+	DEVICE_DTS := meru-ap320
 #	MTDPARTS := spi0.0:256k(u-boot)ro,256k(u-boot-env)ro,13440k(rootfs),2240k(kernel),64k(mac),128k(art)ro,15680k@0x80000(firmware)
+#	IMAGES := kernel.bin rootfs.bin sysupgrade.bin
+	IMAGES := kernel.bin
 	IMAGE/kernel.bin := append-kernel
 #	IMAGE/rootfs.bin := append-rootfs | pad-rootfs
 #	IMAGE/sysupgrade.bin := append-rootfs | pad-rootfs | pad-to $$$$(ROOTFS_SIZE) | append-kernel | check-size $$$$(IMAGE_SIZE)
-#	IMAGES := kernel.bin rootfs.bin sysupgrade.bin
 endef
 TARGET_DEVICES += ap320
 
