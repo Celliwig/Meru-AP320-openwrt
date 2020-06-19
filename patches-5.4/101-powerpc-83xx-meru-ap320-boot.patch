@@ -50,3 +50,11 @@ diff -au temp/linux-5.4.45/arch/powerpc/boot/wrapper Meru-AP320-kernel/arch/powe
  fi
  
  # post-processing needed for some platforms
+@@ -525,6 +533,7 @@
+     ;;
+ cuboot*)
+     gzip -n -f -9 "$ofile"
++    cp ${ofile}.gz ../
+     ${MKIMAGE} -A ppc -O linux -T kernel -C gzip -a "$base" -e "$entry" \
+             $uboot_version -d "$ofile".gz "$ofile"
+     ;;
