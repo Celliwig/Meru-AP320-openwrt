@@ -1,0 +1,3 @@
+CONFIG_TARGET_mpc83xx=y
+CONFIG_TARGET_mpc83xx_meru=y
+CONFIG_TARGET_mpc83xx_meru_DEVICE_ap320=y
