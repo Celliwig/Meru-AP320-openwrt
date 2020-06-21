@@ -3,8 +3,10 @@ DEVICE_VARS += ROOTFS_SIZE
 define Build/fullimage
 	rm -f ${IMAGE_ROOTFS}.gz
 	gzip -9nk ${IMAGE_ROOTFS}
+	export kernel_load_addr=0x`${NM} $(KDIR)/cuImage.meru-ap320.elf | grep ' _start' | cut -d' ' -f1`; \
+	export kernel_entry_addr=`${OBJDUMP} -f $(KDIR)/cuImage.meru-ap320.elf | grep '^start address ' | cut -d' ' -f3`; \
 	mkimage -A powerpc -O linux -C gzip -T multi \
-		-a $(KERNEL_LOADADDR) -e $(if $(KERNEL_ENTRY),$(KERNEL_ENTRY),$(KERNEL_LOADADDR)) \
+		-a $$kernel_load_addr -e $$kernel_entry_addr \
 		-n 'Meru Networks AP320 $(VERSION_DIST) Linux-$(LINUX_VERSION)' \
 		-d $(KDIR)/cuImage.meru-ap320.gz:${IMAGE_ROOTFS}.gz $@
 endef
@@ -13,14 +15,12 @@ define Device/ap320
 	DEVICE_VENDOR := Meru Networks
 	DEVICE_MODEL := AP320
 	BOARDNAME := AP320
-	DEVICE_PACKAGES += wpad
+	DEVICE_PACKAGES += wpad-basic
 	ROOTFS_SIZE := 5040k
 	IMAGE_SIZE := 5040k
 #	KERNEL_NAME := cuImage.meru-ap320.elf
 	KERNEL := kernel-bin | gzip
 	DEVICE_DTS := meru-ap320
-	KERNEL_LOADADDR := 0x800000
-	KERNEL_ENTRY := 0x800000
 #	MTDPARTS := spi0.0:256k(u-boot)ro,256k(u-boot-env)ro,13440k(rootfs),2240k(kernel),64k(mac),128k(art)ro,15680k@0x80000(firmware)
 #	IMAGES := kernel.bin rootfs.bin sysupgrade.bin
 	IMAGES := fullimage.bin

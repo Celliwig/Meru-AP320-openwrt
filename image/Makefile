@@ -5,6 +5,12 @@
 include $(TOPDIR)/rules.mk
 include $(INCLUDE_DIR)/image.mk
 
+CC := $(TARGET_CROSS)gcc
+LD := $(TARGET_CROSS)ld
+NM := $(TARGET_CROSS)nm
+OBJCOPY := $(TARGET_CROSS)objcopy
+OBJDUMP := $(TARGET_CROSS)objdump
+
 define Build/copy-file
 	cat "$(1)" > "$@"
 endef
