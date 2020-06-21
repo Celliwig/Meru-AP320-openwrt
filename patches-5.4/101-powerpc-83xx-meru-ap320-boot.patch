@@ -46,7 +46,7 @@ diff -au temp/linux-5.4.45/arch/powerpc/boot/wrapper Meru-AP320-kernel/arch/powe
  if [ -n "$binary" ]; then
      mv "$ofile" "$ofile".elf
      ${CROSS}objcopy -O binary "$ofile".elf "$ofile"
-+    cp ${ofile}.elf .
++    cp ${ofile}.elf ../
  fi
  
  # post-processing needed for some platforms
