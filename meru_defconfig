@@ -1,3 +1,4 @@
+# Base
 CONFIG_TARGET_mpc83xx=y
 CONFIG_TARGET_mpc83xx_meru=y
 CONFIG_TARGET_mpc83xx_meru_DEVICE_ap320=y
@@ -22,3 +23,15 @@ CONFIG_VERSION_NUMBER="0"
 CONFIG_VERSION_PRODUCT="AP320"
 CONFIG_VERSION_REPO="http://downloads.openwrt.org/snapshots"
 CONFIG_VERSION_SUPPORT_URL=""
+
+# Kernel modules
+CONFIG_PACKAGE_kmod-cfg80211=y
+CONFIG_PACKAGE_kmod-mac80211=y
+CONFIG_PACKAGE_kmod-ath=y
+CONFIG_PACKAGE_kmod-ath9k=y
+CONFIG_PACKAGE_kmod-random-core=y
+
+# Packages
+CONFIG_PACKAGE_wireless-regdb=y
+CONFIG_PACKAGE_dhcpcd=y
+CONFIG_PACKAGE_luci=y
