@@ -1,0 +1,53 @@
+config system
+        option ttylogin '0'
+        option log_size '64'
+        option urandom_seed '0'
+        option hostname 'Sumeru'
+        option zonename 'UTC'
+        option log_proto 'udp'
+        option conloglevel '6'
+        option cronloglevel '8'
+
+config timeserver 'ntp'
+        option enabled '0'
+
+config led
+        option name 'Status (Blue)'
+        option sysfs 'status_blue'
+        option trigger 'default-on'
+        option default '0'
+
+config led
+        option name 'Status (Green)'
+        option sysfs 'status_green'
+        option trigger 'heartbeat'
+
+config led
+        option name 'RF1 (On)'
+        option sysfs 'rf1_green'
+        option trigger 'netdev'
+        option dev 'radio0.network1'
+        list mode 'link'
+
+config led
+        option sysfs 'rf1_red'
+        option trigger 'netdev'
+        option dev 'radio0.network1'
+        list mode 'tx'
+        list mode 'rx'
+        option name 'RF1 (Traffic)'
+
+config led
+        option name 'RF2 (On)'
+        option sysfs 'rf2_green'
+        option trigger 'netdev'
+        option dev 'radio1.network1'
+        list mode 'link'
+
+config led
+        option name 'RF2 (Traffic)'
+        option sysfs 'rf2_red'
+        option trigger 'netdev'
+        option dev 'radio1.network1'
+        list mode 'tx'
+        list mode 'rx'
