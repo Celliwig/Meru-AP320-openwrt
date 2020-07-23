@@ -1,5 +1,5 @@
 config system
-        option ttylogin '0'
+        option ttylogin '1'
         option log_size '64'
         option urandom_seed '0'
         option hostname 'Sumeru'
