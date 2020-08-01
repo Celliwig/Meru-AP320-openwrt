@@ -14,8 +14,10 @@ OpenWRT target for Meru Networks AP320.
 - ./scripts/feeds update -a
 - ./scripts/feeds install -a
 - edit 'package/firmware/wireless-regdb/Makefile'
-	-	$(CP) $(PKG_BUILD_DIR)/regulatory.db $(1)/lib/firmware/
-	-+	$(CP) $(PKG_BUILD_DIR)/regulatory.db.p7s $(1)/lib/firmware/
+```
+	$(CP) $(PKG_BUILD_DIR)/regulatory.db $(1)/lib/firmware/
++	$(CP) $(PKG_BUILD_DIR)/regulatory.db.p7s $(1)/lib/firmware/
+```
 - cp target/linux/mpc83xx/meru_defconfig .config
 - make defconfig
 - make
