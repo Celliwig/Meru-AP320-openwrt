@@ -20,10 +20,18 @@ OpenWRT target for Meru Networks AP320.
 - make defconfig
 - make
 - cd bin/targets/mpc83xx/meru/
-- cat openwrt-0-1-mpc83xx-meru-ap320-squashfs-fdt.bin openwrt-0-1-mpc83xx-meru-ap320-squashfs-kernel.bin openwrt-0-1-mpc83xx-meru-ap320-squashfs-rootfs.bin > meru_ap320.fw
+- cat openwrt-0-1-mpc83xx-meru-ap320-squashfs-fdt.bin openwrt-0-1-mpc83xx-meru-ap320-squashfs-kernel.bin openwrt-0-1-mpc83xx-meru-ap320-squashfs-rootfs.bin > __meru_ap320.fw__
 
+## Install
+- Boot to U-boot.
+- Copy __meru_ap320.fw__ to the device memory.
+- Write to flash memory starting at the second sector: 0xff020000
 
 ## Operation
 
 - Default password: Sumeru
 - Default IP: 192.168.1.1
+
+## ToDo
+- Move to ubifs.
+- Implement sysupgrade.
